@@ -256,7 +256,9 @@ class SignalAnalysis:
                 self.analyzer.polyaanalyzer(self.npread, rough_range, stride)
 
             # Load basecalled events for further jobs working also in base-space
-            events = self.load_events()
+            events = None
+            if self.config['dump_basecalls'] or self.config['trim_adapter'] or self.config['filter_unsplit_reads']:
+                events = self.load_events()
             if self.config['dump_basecalls']:
                 self.analyzer.write_basecalled_events(
                         self.npread.read_id, events,
